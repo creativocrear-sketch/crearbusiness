@@ -676,11 +676,11 @@
     }
     .contact-info {
       margin: 34px auto 0;
-      max-width: 760px;
+      max-width: 920px;
       text-align: left;
       display: grid;
-      gap: 20px;
-      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     .contact-panel {
       background: rgba(255,255,255,0.65);
@@ -688,9 +688,31 @@
       border-radius: 14px;
       padding: 22px;
     }
+    .contact-panel.wide {
+      grid-column: 1 / -1;
+    }
+    .contact-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .contact-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-red-dim);
+      color: var(--accent-red);
+      font-size: 0.9rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
     .contact-panel h3 {
       font-size: 1.05rem;
-      margin-bottom: 8px;
+      margin-bottom: 0;
       color: var(--text);
     }
     .contact-panel p {
@@ -838,6 +860,7 @@
       .companies-toolbar { justify-content: flex-start; }
       .company-search { min-width: 100%; }
       .contact-info { grid-template-columns: 1fr; }
+      .contact-panel.wide { grid-column: auto; }
     }
 
     @media (max-width: 600px) {
@@ -1047,8 +1070,11 @@
     <h2 class="reveal">Un solo holding,<br/><span style="color:var(--accent2)">múltiples soluciones.</span></h2>
     <p class="reveal">Estamos construyendo el ecosistema digital del futuro. ¿Quieres ser parte?</p>
     <div class="contact-info reveal">
-      <div class="contact-panel">
-        <h3>Síguenos en redes sociales</h3>
+      <div class="contact-panel wide">
+        <div class="contact-header">
+          <span class="contact-icon">#</span>
+          <h3>Síguenos en redes sociales</h3>
+        </div>
         <p>Mantente actualizado con nuestras últimas noticias, tips y casos de éxito.</p>
         <ul class="social-links">
           <li><a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">Facebook</a></li>
@@ -1057,19 +1083,29 @@
         </ul>
       </div>
       <div class="contact-panel">
-        <h3>Nuestras oficinas</h3>
-        <div class="office-item">
-          <strong>Oficina principal</strong>
-          <p>Cra. 4 #9 - 73 oficina 306<br/>Cartago, Valle del Cauca</p>
+        <div class="contact-header">
+          <span class="contact-icon">📍</span>
+          <h3>Nuestras oficinas</h3>
+        </div>
+        <p>Oficina principal</p>
+        <p>Cra. 4 #9 - 73 oficina 306<br/>Cartago, Valle del Cauca</p>
+      </div>
+      <div class="contact-panel">
+        <div class="contact-header">
+          <span class="contact-icon">📞</span>
+          <h3>Teléfono</h3>
         </div>
         <div class="office-item">
           <strong>Teléfono</strong>
           <p>+57 310 5317126<br/>Lunes - Viernes, 9am - 6pm</p>
         </div>
-        <div class="office-item">
-          <strong>Email</strong>
-          <p>contacto@crearcomunicaciones.net<br/>Respuesta en 24 horas</p>
+      </div>
+      <div class="contact-panel">
+        <div class="contact-header">
+          <span class="contact-icon">✉</span>
+          <h3>Email</h3>
         </div>
+        <p>contacto@crearcomunicaciones.net<br/>Respuesta en 24 horas</p>
       </div>
     </div>
   </section>
