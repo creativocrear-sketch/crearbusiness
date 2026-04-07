@@ -518,21 +518,21 @@
     .company-card:hover::before { opacity: 1; }
 
     .company-logo {
-      width: 56px;
-      height: 56px;
-      border-radius: 14px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
+      width: auto;
+      height: auto;
+      border-radius: 0;
+      background: transparent;
+      border: none;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       font-size: 1.5rem;
-      margin-bottom: 28px;
-      transition: border-color 0.3s, box-shadow 0.3s;
+      margin-bottom: 22px;
+      transition: transform 0.3s;
     }
     .company-logo img {
-      width: 62px;
-      height: 62px;
+      width: 108px;
+      height: 108px;
       object-fit: contain;
       display: block;
     }
@@ -546,8 +546,7 @@
       filter: contrast(1.1) saturate(1.08);
     }
     .company-card:hover .company-logo {
-      border-color: rgba(167,59,68,0.45);
-      box-shadow: 0 0 20px rgba(167,59,68,0.2);
+      transform: scale(1.03);
     }
 
     .company-name {
