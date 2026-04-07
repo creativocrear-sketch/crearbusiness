@@ -19,11 +19,11 @@
       --text: #1f2937;
       --text-muted: #6b7280;
       --text-sub: #4b5563;
-      --accent: #2841BB;
-      --accent-dim: rgba(40,65,187,0.12);
-      --accent-glow: rgba(40,65,187,0.35);
-      --accent2: #2841BB;
-      --accent-red: #A73B44;
+      --accent: #A73B44;
+      --accent-dim: rgba(167,59,68,0.12);
+      --accent-glow: rgba(167,59,68,0.35);
+      --accent2: #A73B44;
+      --accent-blue: #2841BB;
       --radius: 16px;
       --radius-sm: 10px;
     }
@@ -124,7 +124,7 @@
       transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
     }
     .nav-cta:hover {
-      background: var(--accent2);
+      background: var(--accent-blue);
       box-shadow: 0 0 24px var(--accent-glow);
       transform: translateY(-1px);
     }
@@ -180,8 +180,8 @@
       align-items: center;
       gap: 8px;
       background: var(--accent-dim);
-      border: 1px solid rgba(167,59,68,0.35);
-      color: var(--accent-red);
+      border: 1px solid rgba(40,65,187,0.35);
+      color: var(--accent-blue);
       font-size: 0.8rem;
       font-weight: 500;
       padding: 6px 14px;
@@ -197,8 +197,8 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: var(--accent-red);
-      box-shadow: 0 0 8px rgba(167,59,68,0.6);
+      background: var(--accent-blue);
+      box-shadow: 0 0 8px rgba(40,65,187,0.6);
       animation: blink 2s ease-in-out infinite;
     }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
@@ -215,7 +215,7 @@
       animation: fade-up 0.8s 0.4s forwards;
     }
     h1 .accent-word {
-      background: linear-gradient(135deg, var(--accent) 0%, #4d63cf 100%);
+      background: linear-gradient(135deg, var(--accent) 0%, #c65962 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -281,7 +281,7 @@
     .btn-primary:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 30px var(--accent-glow);
-      background: var(--accent-red);
+      background: var(--accent-blue);
     }
     .btn-primary:hover::after { opacity: 1; }
 
@@ -343,7 +343,7 @@
     .about-left .section-tag {
       font-size: 0.75rem;
       font-weight: 500;
-      color: var(--accent);
+      color: var(--accent-blue);
       text-transform: uppercase;
       letter-spacing: 0.1em;
       margin-bottom: 16px;
@@ -414,7 +414,7 @@
     .section-header .section-tag {
       font-size: 0.75rem;
       font-weight: 500;
-      color: var(--accent);
+      color: var(--accent-blue);
       text-transform: uppercase;
       letter-spacing: 0.1em;
       margin-bottom: 16px;
@@ -508,9 +508,9 @@
       transition: opacity 0.4s;
     }
     .company-card:hover {
-      border-color: rgba(40,65,187,0.35);
+      border-color: rgba(167,59,68,0.4);
       transform: translateY(-8px);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 0 0 1px rgba(40,65,187,0.2);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 0 0 1px rgba(167,59,68,0.22);
     }
     .company-card:hover::before { opacity: 1; }
 
@@ -577,8 +577,8 @@
     }
     .company-card:hover .company-arrow {
       opacity: 1;
-      background: var(--accent);
-      border-color: var(--accent);
+      background: var(--accent-blue);
+      border-color: var(--accent-blue);
       color: #fff;
       transform: translate(-2px, -2px);
     }
@@ -615,13 +615,13 @@
       font-family: 'Montserrat', sans-serif;
       font-size: 0.7rem;
       font-weight: 700;
-      color: var(--accent-red);
+      color: var(--accent);
       letter-spacing: 0.15em;
       text-transform: uppercase;
       margin-bottom: 20px;
     }
     .focus-item:nth-child(2) .focus-number {
-      color: var(--accent);
+      color: var(--accent-blue);
     }
     .focus-icon {
       width: 48px;
