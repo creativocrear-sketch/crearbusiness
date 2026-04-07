@@ -98,6 +98,17 @@
       transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--text); }
+    .nav-links a.active { color: var(--text); }
+    .nav-toggle {
+      display: none;
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+    }
 
     .nav-cta {
       background: var(--accent);
@@ -145,6 +156,7 @@
       transform: translate(-50%, -55%);
       pointer-events: none;
       animation: pulse-glow 6s ease-in-out infinite;
+      will-change: transform, opacity;
     }
     @keyframes pulse-glow {
       0%, 100% { opacity: 0.7; transform: translate(-50%, -55%) scale(1); }
@@ -314,6 +326,11 @@
     }
     .stat-label { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; letter-spacing: 0.04em; text-transform: uppercase; }
 
+    .counter {
+      display: inline-block;
+      min-width: 50px;
+    }
+
     /* ── ABOUT ── */
     #about {
       display: grid;
@@ -422,6 +439,50 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 24px;
     }
+    .companies-toolbar {
+      margin: 0 auto 36px;
+      max-width: 920px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .company-filters {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-sub);
+      border-radius: 999px;
+      padding: 8px 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.8rem;
+    }
+    .filter-btn:hover,
+    .filter-btn.active {
+      color: var(--text);
+      border-color: rgba(99,102,241,0.45);
+      background: var(--accent-dim);
+    }
+    .company-search {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 9px 12px;
+      min-width: 220px;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .company-search:focus {
+      border-color: rgba(99,102,241,0.5);
+      box-shadow: 0 0 0 4px rgba(99,102,241,0.14);
+    }
 
     .company-card {
       background: var(--surface);
@@ -432,6 +493,9 @@
       overflow: hidden;
       cursor: default;
       transition: border-color 0.35s, transform 0.35s, box-shadow 0.35s;
+    }
+    .company-card.hidden {
+      display: none;
     }
     .company-card::before {
       content: '';
@@ -580,6 +644,46 @@
       position: relative;
       overflow: hidden;
     }
+    .contact-form {
+      margin: 34px auto 0;
+      max-width: 620px;
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1fr 1fr;
+    }
+    .contact-form textarea,
+    .contact-form input {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .contact-form textarea {
+      grid-column: 1 / -1;
+      resize: vertical;
+      min-height: 120px;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      border-color: rgba(99,102,241,0.5);
+      box-shadow: 0 0 0 4px rgba(99,102,241,0.14);
+    }
+    .contact-form button {
+      grid-column: 1 / -1;
+      justify-self: center;
+    }
+    .form-message {
+      grid-column: 1 / -1;
+      font-size: 0.85rem;
+      min-height: 20px;
+      color: var(--text-sub);
+    }
     .cta-bg {
       position: absolute;
       inset: 0;
@@ -661,7 +765,21 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       nav { padding: 18px 24px; }
-      .nav-links { display: none; }
+      .nav-links {
+        position: absolute;
+        top: calc(100% + 8px);
+        right: 24px;
+        background: rgba(17,17,19,0.96);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 12px 14px;
+        display: none;
+        flex-direction: column;
+        gap: 12px;
+        min-width: 180px;
+      }
+      .nav-links.open { display: flex; }
+      .nav-toggle { display: inline-flex; align-items: center; justify-content: center; }
       section { padding: 80px 24px; }
       #hero { padding: 100px 24px 60px; }
       #about { grid-template-columns: 1fr; gap: 48px; }
@@ -673,11 +791,26 @@
       .focus-item:last-child { border-bottom: none; }
       footer { flex-direction: column; gap: 20px; text-align: center; }
       #focus { padding: 80px 24px; }
+      .companies-toolbar { justify-content: flex-start; }
+      .company-search { min-width: 100%; }
+      .contact-form { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 600px) {
       .about-right { grid-template-columns: 1fr; }
       .hero-stats { gap: 28px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
     }
   </style>
 </head>
@@ -690,7 +823,9 @@
       <li><a href="#about">Nosotros</a></li>
       <li><a href="#companies">Empresas</a></li>
       <li><a href="#focus">Enfoque</a></li>
+      <li><a href="#cta">Contacto</a></li>
     </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
     <button class="nav-cta" onclick="document.getElementById('companies').scrollIntoView({behavior:'smooth'})">Conocer más</button>
   </nav>
 
@@ -715,11 +850,11 @@
 
     <div class="hero-stats">
       <div class="stat">
-        <div class="stat-num">3+</div>
+        <div class="stat-num"><span class="counter" data-target="3">0</span>+</div>
         <div class="stat-label">Empresas activas</div>
       </div>
       <div class="stat">
-        <div class="stat-num">100%</div>
+        <div class="stat-num"><span class="counter" data-target="100">0</span>%</div>
         <div class="stat-label">Digital</div>
       </div>
       <div class="stat">
@@ -769,8 +904,17 @@
       <p>Tres empresas, un ecosistema. Cada una resuelve un problema distinto con tecnología como base.</p>
     </div>
 
-    <div class="companies-grid">
-      <div class="company-card reveal">
+    <div class="companies-toolbar reveal">
+      <div class="company-filters">
+        <button class="filter-btn active" data-filter="all">Todas</button>
+        <button class="filter-btn" data-filter="automatizacion">Automatización</button>
+        <button class="filter-btn" data-filter="marketing">Marketing</button>
+        <button class="filter-btn" data-filter="gestion">Gestión</button>
+      </div>
+      <input class="company-search" id="companySearch" type="search" placeholder="Buscar empresa o categoría..." />
+    </div>
+    <div class="companies-grid" id="companiesGrid">
+      <div class="company-card reveal" data-category="automatizacion" data-search="crear.chat ia automatizacion chatbots">
         <div class="company-logo">🤖</div>
         <div class="company-name">Crear.chat</div>
         <div class="company-tag">IA & Automatización</div>
@@ -778,7 +922,7 @@
         <div class="company-arrow">→</div>
       </div>
 
-      <div class="company-card reveal">
+      <div class="company-card reveal" data-category="marketing" data-search="crear comunicaciones marketing digital estrategia">
         <div class="company-logo">📡</div>
         <div class="company-name">Crear Comunicaciones</div>
         <div class="company-tag">Marketing Digital</div>
@@ -786,7 +930,7 @@
         <div class="company-arrow">→</div>
       </div>
 
-      <div class="company-card reveal">
+      <div class="company-card reveal" data-category="gestion" data-search="miinfo gestion informacion datos">
         <div class="company-logo">🗂️</div>
         <div class="company-name">Miinfo</div>
         <div class="company-tag">Gestión de Información</div>
@@ -849,12 +993,15 @@
     <div class="cta-divider"></div>
     <h2 class="reveal">Un solo holding,<br/><span style="color:var(--accent2)">múltiples soluciones.</span></h2>
     <p class="reveal">Estamos construyendo el ecosistema digital del futuro. ¿Quieres ser parte?</p>
-    <div class="reveal">
-      <a href="mailto:hola@crearbusiness.com" class="btn-primary" style="font-size:1rem; padding:16px 40px;">
-        Conecta con nosotros
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
+    <form class="contact-form reveal" id="contactForm">
+      <input type="text" id="name" name="name" placeholder="Tu nombre" required />
+      <input type="email" id="email" name="email" placeholder="Tu correo" required />
+      <textarea id="message" name="message" placeholder="Cuéntanos sobre tu proyecto" required></textarea>
+      <button type="submit" class="btn-primary" style="font-size:1rem; padding:14px 34px;">
+        Abrir correo preparado
+      </button>
+      <p class="form-message" id="formMessage"></p>
+    </form>
   </section>
 
   <!-- FOOTER -->
@@ -875,6 +1022,13 @@
       navbar.classList.toggle('scrolled', window.scrollY > 40);
     });
 
+    // Mobile nav
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.querySelector('.nav-links');
+    navToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+
     // Scroll reveal
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
@@ -893,6 +1047,21 @@
     }, { threshold: 0.12 });
     reveals.forEach(el => observer.observe(el));
 
+    // Active section in nav
+    const sections = document.querySelectorAll('section, #focus');
+    const navAnchors = document.querySelectorAll('.nav-links a');
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const id = entry.target.id;
+        navAnchors.forEach((a) => {
+          const isActive = a.getAttribute('href') === `#${id}`;
+          a.classList.toggle('active', isActive);
+        });
+      });
+    }, { threshold: 0.35 });
+    sections.forEach(section => sectionObserver.observe(section));
+
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {
@@ -900,9 +1069,87 @@
         if (target) {
           e.preventDefault();
           target.scrollIntoView({ behavior: 'smooth' });
+          navLinks.classList.remove('open');
         }
       });
     });
+
+    // Counter animation
+    const counters = document.querySelectorAll('.counter');
+    const countObserver = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const counter = entry.target;
+        const target = Number(counter.dataset.target || 0);
+        const duration = 1000;
+        const start = performance.now();
+
+        const tick = (now) => {
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          counter.textContent = String(Math.floor(eased * target));
+          if (progress < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+        obs.unobserve(counter);
+      });
+    }, { threshold: 0.7 });
+    counters.forEach(counter => countObserver.observe(counter));
+
+    // Company filters and search
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const companyCards = document.querySelectorAll('.company-card');
+    const companySearch = document.getElementById('companySearch');
+    let activeFilter = 'all';
+
+    const applyCompanyFilters = () => {
+      const query = companySearch.value.trim().toLowerCase();
+      companyCards.forEach((card) => {
+        const category = card.dataset.category;
+        const searchable = card.dataset.search || '';
+        const byFilter = activeFilter === 'all' || category === activeFilter;
+        const bySearch = !query || searchable.includes(query);
+        card.classList.toggle('hidden', !(byFilter && bySearch));
+      });
+    };
+
+    filterButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        activeFilter = btn.dataset.filter;
+        filterButtons.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        applyCompanyFilters();
+      });
+    });
+    companySearch.addEventListener('input', applyCompanyFilters);
+
+    // Contact form helper
+    const form = document.getElementById('contactForm');
+    const formMessage = document.getElementById('formMessage');
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      if (name.length < 2 || message.length < 10) {
+        formMessage.textContent = 'Completa un nombre valido y un mensaje de al menos 10 caracteres.';
+        return;
+      }
+
+      const subject = encodeURIComponent(`Contacto web - ${name}`);
+      const body = encodeURIComponent(`Nombre: ${name}\nCorreo: ${email}\n\nMensaje:\n${message}`);
+      window.location.href = `mailto:hola@crearbusiness.com?subject=${subject}&body=${body}`;
+      formMessage.textContent = 'Se abrio tu cliente de correo con el mensaje listo.';
+      form.reset();
+    });
+
+    // Subtle parallax
+    const heroGlow = document.querySelector('.hero-glow');
+    window.addEventListener('scroll', () => {
+      const offset = Math.min(window.scrollY * 0.08, 35);
+      heroGlow.style.transform = `translate(-50%, calc(-55% + ${offset}px))`;
+    }, { passive: true });
   </script>
 </body>
 </html>
