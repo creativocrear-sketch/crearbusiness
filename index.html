@@ -19,11 +19,14 @@
       --text: #1f2937;
       --text-muted: #6b7280;
       --text-sub: #4b5563;
-      --accent: #A73B44;
-      --accent-dim: rgba(167,59,68,0.12);
-      --accent-glow: rgba(167,59,68,0.35);
+      --accent: #2841BB;
+      --accent-dim: rgba(40,65,187,0.12);
+      --accent-glow: rgba(40,65,187,0.35);
       --accent2: #A73B44;
       --accent-blue: #2841BB;
+      --accent-red: #A73B44;
+      --accent-red-dim: rgba(167,59,68,0.12);
+      --accent-red-glow: rgba(167,59,68,0.35);
       --radius: 16px;
       --radius-sm: 10px;
     }
@@ -124,8 +127,8 @@
       transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
     }
     .nav-cta:hover {
-      background: var(--accent-blue);
-      box-shadow: 0 0 24px var(--accent-glow);
+      background: var(--accent2);
+      box-shadow: 0 0 24px var(--accent-red-glow);
       transform: translateY(-1px);
     }
 
@@ -179,7 +182,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: var(--accent-dim);
+      background: var(--accent-red-dim);
       border: 1px solid rgba(40,65,187,0.35);
       color: var(--accent-blue);
       font-size: 0.8rem;
@@ -215,7 +218,7 @@
       animation: fade-up 0.8s 0.4s forwards;
     }
     h1 .accent-word {
-      background: linear-gradient(135deg, var(--accent) 0%, #c65962 100%);
+      background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-red) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -385,7 +388,7 @@
     .about-icon {
       width: 40px;
       height: 40px;
-      background: var(--accent-dim);
+      background: var(--accent-red-dim);
       border-radius: 10px;
       display: flex;
       align-items: center;
@@ -469,7 +472,7 @@
     .filter-btn.active {
       color: var(--text);
       border-color: rgba(99,102,241,0.45);
-      background: var(--accent-dim);
+      background: var(--accent-red-dim);
     }
     .company-search {
       background: var(--surface);
@@ -503,7 +506,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at top left, var(--accent-dim), transparent 60%);
+      background: radial-gradient(ellipse at top left, var(--accent-red-dim), transparent 60%);
       opacity: 0;
       transition: opacity 0.4s;
     }
@@ -544,7 +547,7 @@
       font-size: 0.72rem;
       font-weight: 500;
       color: var(--accent-red);
-      background: var(--accent-dim);
+      background: var(--accent-red-dim);
       border: 1px solid rgba(167,59,68,0.3);
       padding: 4px 10px;
       border-radius: 100px;
