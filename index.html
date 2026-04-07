@@ -531,10 +531,19 @@
       transition: border-color 0.3s, box-shadow 0.3s;
     }
     .company-logo img {
-      width: 34px;
-      height: 34px;
+      width: 46px;
+      height: 46px;
       object-fit: contain;
       display: block;
+    }
+    .company-logo.is-chat-logo {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+    }
+    .company-logo.is-chat-logo img {
+      mix-blend-mode: multiply;
+      filter: contrast(1.1) saturate(1.08);
     }
     .company-card:hover .company-logo {
       border-color: rgba(167,59,68,0.45);
@@ -938,7 +947,7 @@
     </div>
     <div class="companies-grid" id="companiesGrid">
       <div class="company-card reveal" data-category="automatizacion" data-search="crear.chat ia automatizacion chatbots">
-        <div class="company-logo"><img src="assets/crear-chat-logo.png" alt="Logo de Crear.chat" /></div>
+        <div class="company-logo is-chat-logo"><img src="assets/crear-chat-logo.png" alt="Logo de Crear.chat" /></div>
         <div class="company-name">Crear.chat</div>
         <div class="company-tag">IA & Automatización</div>
         <p class="company-desc">Agencia de automatización WhatsApp Business API con gestión de ventas, servicios, soporte, pedidos, citas médicas, turnos de trabajo y consultas de saldos.</p>
