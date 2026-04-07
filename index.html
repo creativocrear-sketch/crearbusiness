@@ -22,7 +22,8 @@
       --accent: #2841BB;
       --accent-dim: rgba(40,65,187,0.12);
       --accent-glow: rgba(40,65,187,0.35);
-      --accent2: #A73B44;
+      --accent2: #2841BB;
+      --accent-red: #A73B44;
       --radius: 16px;
       --radius-sm: 10px;
     }
@@ -179,8 +180,8 @@
       align-items: center;
       gap: 8px;
       background: var(--accent-dim);
-      border: 1px solid rgba(99,102,241,0.25);
-      color: var(--accent2);
+      border: 1px solid rgba(167,59,68,0.35);
+      color: var(--accent-red);
       font-size: 0.8rem;
       font-weight: 500;
       padding: 6px 14px;
@@ -196,8 +197,8 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: var(--accent2);
-      box-shadow: 0 0 8px var(--accent);
+      background: var(--accent-red);
+      box-shadow: 0 0 8px rgba(167,59,68,0.6);
       animation: blink 2s ease-in-out infinite;
     }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
@@ -214,7 +215,7 @@
       animation: fade-up 0.8s 0.4s forwards;
     }
     h1 .accent-word {
-      background: linear-gradient(135deg, var(--accent2) 0%, #c084fc 100%);
+      background: linear-gradient(135deg, var(--accent) 0%, #4d63cf 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -341,7 +342,7 @@
     .about-left .section-tag {
       font-size: 0.75rem;
       font-weight: 500;
-      color: var(--accent2);
+      color: var(--accent);
       text-transform: uppercase;
       letter-spacing: 0.1em;
       margin-bottom: 16px;
@@ -412,7 +413,7 @@
     .section-header .section-tag {
       font-size: 0.75rem;
       font-weight: 500;
-      color: var(--accent2);
+      color: var(--accent);
       text-transform: uppercase;
       letter-spacing: 0.1em;
       margin-bottom: 16px;
@@ -541,9 +542,9 @@
       display: inline-block;
       font-size: 0.72rem;
       font-weight: 500;
-      color: var(--accent2);
+      color: var(--accent-red);
       background: var(--accent-dim);
-      border: 1px solid rgba(99,102,241,0.2);
+      border: 1px solid rgba(167,59,68,0.3);
       padding: 4px 10px;
       border-radius: 100px;
       margin-bottom: 18px;
