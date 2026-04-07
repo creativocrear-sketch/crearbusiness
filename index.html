@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CrearBusiness — Holding de Empresas Digitales</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #09090b;
+      --surface: #111113;
+      --surface2: #18181b;
+      --border: rgba(255,255,255,0.07);
+      --border-hover: rgba(255,255,255,0.14);
+      --text: #fafafa;
+      --text-muted: #71717a;
+      --text-sub: #a1a1aa;
+      --accent: #6366f1;
+      --accent-dim: rgba(99,102,241,0.12);
+      --accent-glow: rgba(99,102,241,0.35);
+      --accent2: #818cf8;
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 4px; }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.5;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid transparent;
+      transition: background 0.4s, border-color 0.4s, backdrop-filter 0.4s;
+    }
+    nav.scrolled {
+      background: rgba(9,9,11,0.8);
+      backdrop-filter: blur(20px);
+      border-color: var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.2rem;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent2); }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-sub);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+    .nav-cta:hover {
+      background: var(--accent2);
+      box-shadow: 0 0 24px var(--accent-glow);
+      transform: translateY(-1px);
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 120px 48px; max-width: 1200px; margin: 0 auto; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 48px 80px;
+      position: relative;
+      max-width: 100%;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 800px;
+      height: 800px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -55%);
+      pointer-events: none;
+      animation: pulse-glow 6s ease-in-out infinite;
+    }
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 0.7; transform: translate(-50%, -55%) scale(1); }
+      50% { opacity: 1; transform: translate(-50%, -55%) scale(1.08); }
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(99,102,241,0.25);
+      color: var(--accent2);
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 32px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fade-up 0.8s 0.2s forwards;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent2);
+      box-shadow: 0 0 8px var(--accent);
+      animation: blink 2s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      color: var(--text);
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fade-up 0.8s 0.4s forwards;
+    }
+    h1 .accent-word {
+      background: linear-gradient(135deg, var(--accent2) 0%, #c084fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1rem, 2vw, 1.35rem);
+      font-weight: 500;
+      color: var(--text-sub);
+      margin-bottom: 16px;
+      letter-spacing: 0.01em;
+      opacity: 0;
+      animation: fade-up 0.8s 0.55s forwards;
+    }
+
+    .hero-desc {
+      max-width: 560px;
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      font-weight: 300;
+      line-height: 1.7;
+      margin: 0 auto 44px;
+      opacity: 0;
+      animation: fade-up 0.8s 0.7s forwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fade-up 0.8s 0.85s forwards;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 14px 32px;
+      border-radius: var(--radius-sm);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.1));
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px var(--accent-glow);
+    }
+    .btn-primary:hover::after { opacity: 1; }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-sub);
+      border: 1px solid var(--border);
+      padding: 14px 28px;
+      border-radius: var(--radius-sm);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 400;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-ghost:hover {
+      border-color: var(--border-hover);
+      color: var(--text);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      justify-content: center;
+      margin-top: 80px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fade-up 0.8s 1.1s forwards;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.03em;
+    }
+    .stat-label { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; letter-spacing: 0.04em; text-transform: uppercase; }
+
+    /* ── ABOUT ── */
+    #about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-left .section-tag {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--accent2);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+    }
+    .about-left h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .about-left p {
+      color: var(--text-sub);
+      font-size: 1.05rem;
+      font-weight: 300;
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .about-right {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .about-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .about-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-4px);
+    }
+    .about-card:nth-child(2) { margin-top: 24px; }
+    .about-card:nth-child(4) { margin-top: -24px; }
+    .about-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--accent-dim);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      font-size: 1.2rem;
+    }
+    .about-card h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .about-card p {
+      font-size: 0.825rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ── COMPANIES ── */
+    #companies { padding-top: 0; }
+    .section-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .section-header .section-tag {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--accent2);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .section-header h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 480px;
+      margin: 0 auto;
+      font-weight: 300;
+    }
+
+    .companies-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .company-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px 36px;
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+      transition: border-color 0.35s, transform 0.35s, box-shadow 0.35s;
+    }
+    .company-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at top left, var(--accent-dim), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .company-card:hover {
+      border-color: rgba(99,102,241,0.3);
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(99,102,241,0.1);
+    }
+    .company-card:hover::before { opacity: 1; }
+
+    .company-logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 28px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .company-card:hover .company-logo {
+      border-color: rgba(99,102,241,0.4);
+      box-shadow: 0 0 20px var(--accent-dim);
+    }
+
+    .company-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+    .company-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--accent2);
+      background: var(--accent-dim);
+      border: 1px solid rgba(99,102,241,0.2);
+      padding: 4px 10px;
+      border-radius: 100px;
+      margin-bottom: 18px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .company-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+    .company-arrow {
+      position: absolute;
+      bottom: 28px;
+      right: 28px;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      transition: all 0.25s;
+      opacity: 0;
+    }
+    .company-card:hover .company-arrow {
+      opacity: 1;
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      transform: translate(-2px, -2px);
+    }
+
+    /* ── FOCUS ── */
+    #focus {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      max-width: 100%;
+      padding: 100px 48px;
+    }
+    .focus-inner { max-width: 1200px; margin: 0 auto; }
+    .focus-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 64px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .focus-item {
+      padding: 48px 40px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      position: relative;
+      transition: background 0.3s;
+    }
+    .focus-item:last-child { border-right: none; }
+    .focus-item:hover { background: var(--surface2); }
+
+    .focus-number {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .focus-icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 24px;
+    }
+    .focus-icon svg { width: 100%; height: 100%; }
+    .focus-item h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
+    .focus-item p {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* ── CTA ── */
+    #cta {
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 80% at 50% 100%, rgba(99,102,241,0.12), transparent);
+      pointer-events: none;
+    }
+    #cta h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+    #cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 440px;
+      margin: 0 auto 44px;
+      font-weight: 300;
+    }
+    .cta-divider {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, transparent, var(--border), transparent);
+      margin: 0 auto 60px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 100%;
+    }
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+    }
+    .footer-logo span { color: var(--accent2); }
+    .footer-copy {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+    .footer-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text-sub); }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 18px 24px; }
+      .nav-links { display: none; }
+      section { padding: 80px 24px; }
+      #hero { padding: 100px 24px 60px; }
+      #about { grid-template-columns: 1fr; gap: 48px; }
+      .about-right { grid-template-columns: 1fr 1fr; }
+      .about-card:nth-child(2), .about-card:nth-child(4) { margin-top: 0; }
+      .companies-grid { grid-template-columns: 1fr; }
+      .focus-grid { grid-template-columns: 1fr; }
+      .focus-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .focus-item:last-child { border-bottom: none; }
+      footer { flex-direction: column; gap: 20px; text-align: center; }
+      #focus { padding: 80px 24px; }
+    }
+
+    @media (max-width: 600px) {
+      .about-right { grid-template-columns: 1fr; }
+      .hero-stats { gap: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="#" class="nav-logo">Crear<span>Business</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">Nosotros</a></li>
+      <li><a href="#companies">Empresas</a></li>
+      <li><a href="#focus">Enfoque</a></li>
+    </ul>
+    <button class="nav-cta" onclick="document.getElementById('companies').scrollIntoView({behavior:'smooth'})">Conocer más</button>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+
+    <div class="hero-badge">Holding Digital · Est. 2024</div>
+
+    <h1>Crear<span class="accent-word">Business</span></h1>
+    <p class="hero-subtitle">Holding de empresas digitales</p>
+    <p class="hero-desc">Gestionamos y desarrollamos un ecosistema de empresas enfocadas en tecnología, comunicación y automatización.</p>
+
+    <div class="hero-actions">
+      <a href="#companies" class="btn-primary">
+        Conoce nuestras empresas
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#about" class="btn-ghost">Sobre nosotros</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">3+</div>
+        <div class="stat-label">Empresas activas</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Digital</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">IA</div>
+        <div class="stat-label">Impulsado por tecnología</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-left reveal">
+      <p class="section-tag">Sobre nosotros</p>
+      <h2>Un holding construido para la era digital</h2>
+      <p>CrearBusiness es una empresa matriz que crea, gestiona y escala negocios digitales de alto impacto. Cada empresa del grupo opera de forma independiente pero comparte visión, infraestructura y talento.</p>
+      <p>Nuestro modelo nos permite movernos rápido, iterar y crecer sin perder el foco en lo que importa: construir productos que transformen industrias.</p>
+    </div>
+    <div class="about-right reveal">
+      <div class="about-card">
+        <div class="about-icon">🏗️</div>
+        <h4>Creación</h4>
+        <p>Ideamos y lanzamos empresas digitales desde cero con metodología ágil.</p>
+      </div>
+      <div class="about-card">
+        <div class="about-icon">⚙️</div>
+        <h4>Gestión</h4>
+        <p>Operamos cada empresa con KPIs claros y equipos especializados.</p>
+      </div>
+      <div class="about-card">
+        <div class="about-icon">📈</div>
+        <h4>Escalado</h4>
+        <p>Llevamos cada producto de la idea al mercado con tracción real.</p>
+      </div>
+      <div class="about-card">
+        <div class="about-icon">🔗</div>
+        <h4>Sinergias</h4>
+        <p>Las empresas del holding se potencian entre sí, compartiendo recursos y conocimiento.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPANIES -->
+  <section id="companies">
+    <div class="section-header reveal">
+      <span class="section-tag">Portfolio</span>
+      <h2>Empresas del holding</h2>
+      <p>Tres empresas, un ecosistema. Cada una resuelve un problema distinto con tecnología como base.</p>
+    </div>
+
+    <div class="companies-grid">
+      <div class="company-card reveal">
+        <div class="company-logo">🤖</div>
+        <div class="company-name">Crear.chat</div>
+        <div class="company-tag">IA & Automatización</div>
+        <p class="company-desc">Plataforma de automatización conversacional potenciada con inteligencia artificial. Chatbots, flujos automáticos y atención 24/7 para empresas que quieren escalar sin fricción.</p>
+        <div class="company-arrow">→</div>
+      </div>
+
+      <div class="company-card reveal">
+        <div class="company-logo">📡</div>
+        <div class="company-name">Crear Comunicaciones</div>
+        <div class="company-tag">Marketing Digital</div>
+        <p class="company-desc">Agencia de marketing y estrategia digital. Diseñamos ecosistemas de comunicación que conectan marcas con sus audiencias de forma auténtica y medible.</p>
+        <div class="company-arrow">→</div>
+      </div>
+
+      <div class="company-card reveal">
+        <div class="company-logo">🗂️</div>
+        <div class="company-name">Miinfo</div>
+        <div class="company-tag">Gestión de Información</div>
+        <p class="company-desc">Solución inteligente para la gestión y acceso a información crítica. Centraliza, organiza y pone a disposición los datos que tu negocio necesita, cuando los necesita.</p>
+        <div class="company-arrow">→</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOCUS -->
+  <div id="focus">
+    <div class="focus-inner">
+      <div class="section-header reveal">
+        <span class="section-tag">Nuestro enfoque</span>
+        <h2>Los tres pilares de CrearBusiness</h2>
+      </div>
+      <div class="focus-grid">
+        <div class="focus-item reveal">
+          <div class="focus-number">01</div>
+          <div class="focus-icon">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="8" y="8" width="32" height="32" rx="4" stroke="#6366f1" stroke-width="2"/>
+              <path d="M16 24l6 6 10-12" stroke="#818cf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>Estrategia</h3>
+          <p>Cada empresa nace de un análisis riguroso del mercado. No construimos sin un norte claro: propuesta de valor definida, modelo de negocio validado y ventajas competitivas reales.</p>
+        </div>
+        <div class="focus-item reveal">
+          <div class="focus-number">02</div>
+          <div class="focus-icon">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="24" cy="24" r="14" stroke="#6366f1" stroke-width="2"/>
+              <path d="M20 24l3 3 6-6" stroke="#818cf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M24 10V8M24 40v-2M38 24h2M8 24H6" stroke="#6366f1" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3>Tecnología</h3>
+          <p>Construimos sobre stacks modernos, escalables y seguros. La tecnología no es un fin en sí misma, es el medio que hace posible todo lo demás. Inteligencia artificial, automatización y nube-primero.</p>
+        </div>
+        <div class="focus-item reveal">
+          <div class="focus-number">03</div>
+          <div class="focus-icon">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 36l8-10 6 6 8-14 4 4" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="12" cy="36" r="2" fill="#818cf8"/>
+              <circle cx="38" cy="22" r="2" fill="#818cf8"/>
+            </svg>
+          </div>
+          <h3>Crecimiento</h3>
+          <p>Las métricas que importan: retención, expansión de ingresos y rentabilidad. Crecemos de forma sostenida, reinvirtiendo en cada empresa del ecosistema para maximizar su potencial de largo plazo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <section id="cta">
+    <div class="cta-bg"></div>
+    <div class="cta-divider"></div>
+    <h2 class="reveal">Un solo holding,<br/><span style="color:var(--accent2)">múltiples soluciones.</span></h2>
+    <p class="reveal">Estamos construyendo el ecosistema digital del futuro. ¿Quieres ser parte?</p>
+    <div class="reveal">
+      <a href="mailto:hola@crearbusiness.com" class="btn-primary" style="font-size:1rem; padding:16px 40px;">
+        Conecta con nosotros
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Crear<span>Business</span></div>
+    <p class="footer-copy">© 2024 CrearBusiness. Todos los derechos reservados.</p>
+    <ul class="footer-links">
+      <li><a href="#about">Nosotros</a></li>
+      <li><a href="#companies">Empresas</a></li>
+      <li><a href="mailto:hola@crearbusiness.com">Contacto</a></li>
+    </ul>
+  </footer>
+
+  <script>
+    // Sticky nav
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          // Stagger siblings
+          const siblings = entry.target.parentElement.querySelectorAll('.reveal');
+          let delay = 0;
+          siblings.forEach((sib, idx) => {
+            if (sib === entry.target) delay = idx * 80;
+          });
+          setTimeout(() => entry.target.classList.add('visible'), delay);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
