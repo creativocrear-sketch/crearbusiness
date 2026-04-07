@@ -674,45 +674,59 @@
       position: relative;
       overflow: hidden;
     }
-    .contact-form {
+    .contact-info {
       margin: 34px auto 0;
-      max-width: 620px;
+      max-width: 760px;
+      text-align: left;
       display: grid;
-      gap: 12px;
+      gap: 20px;
       grid-template-columns: 1fr 1fr;
     }
-    .contact-form textarea,
-    .contact-form input {
-      width: 100%;
-      background: var(--surface);
+    .contact-panel {
+      background: rgba(255,255,255,0.65);
       border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px;
+    }
+    .contact-panel h3 {
+      font-size: 1.05rem;
+      margin-bottom: 8px;
       color: var(--text);
-      border-radius: 12px;
-      padding: 12px 14px;
-      font-family: inherit;
-      font-size: 0.95rem;
-      outline: none;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
-    .contact-form textarea {
-      grid-column: 1 / -1;
-      resize: vertical;
-      min-height: 120px;
+    .contact-panel p {
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      font-size: 0.92rem;
+      line-height: 1.65;
     }
-    .contact-form input:focus,
-    .contact-form textarea:focus {
-      border-color: rgba(99,102,241,0.5);
-      box-shadow: 0 0 0 4px rgba(99,102,241,0.14);
+    .social-links {
+      list-style: none;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 8px;
     }
-    .contact-form button {
-      grid-column: 1 / -1;
-      justify-self: center;
-    }
-    .form-message {
-      grid-column: 1 / -1;
+    .social-links a {
+      text-decoration: none;
+      color: var(--accent-blue);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 7px 12px;
       font-size: 0.85rem;
-      min-height: 20px;
-      color: var(--text-sub);
+      transition: all 0.2s ease;
+    }
+    .social-links a:hover {
+      background: var(--accent-red-dim);
+      color: var(--accent-red);
+      border-color: rgba(167,59,68,0.35);
+    }
+    .office-item {
+      margin-top: 12px;
+    }
+    .office-item strong {
+      display: block;
+      margin-bottom: 2px;
+      color: var(--text);
     }
     .cta-bg {
       position: absolute;
@@ -823,7 +837,7 @@
       #focus { padding: 80px 24px; }
       .companies-toolbar { justify-content: flex-start; }
       .company-search { min-width: 100%; }
-      .contact-form { grid-template-columns: 1fr; }
+      .contact-info { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 600px) {
@@ -1032,15 +1046,32 @@
     <div class="cta-divider"></div>
     <h2 class="reveal">Un solo holding,<br/><span style="color:var(--accent2)">múltiples soluciones.</span></h2>
     <p class="reveal">Estamos construyendo el ecosistema digital del futuro. ¿Quieres ser parte?</p>
-    <form class="contact-form reveal" id="contactForm">
-      <input type="text" id="name" name="name" placeholder="Tu nombre" required />
-      <input type="email" id="email" name="email" placeholder="Tu correo" required />
-      <textarea id="message" name="message" placeholder="Cuéntanos sobre tu proyecto" required></textarea>
-      <button type="submit" class="btn-primary" style="font-size:1rem; padding:14px 34px;">
-        Abrir correo preparado
-      </button>
-      <p class="form-message" id="formMessage"></p>
-    </form>
+    <div class="contact-info reveal">
+      <div class="contact-panel">
+        <h3>Síguenos en redes sociales</h3>
+        <p>Mantente actualizado con nuestras últimas noticias, tips y casos de éxito.</p>
+        <ul class="social-links">
+          <li><a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+          <li><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+          <li><a href="https://wa.me/573105317126" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+        </ul>
+      </div>
+      <div class="contact-panel">
+        <h3>Nuestras oficinas</h3>
+        <div class="office-item">
+          <strong>Oficina principal</strong>
+          <p>Cra. 4 #9 - 73 oficina 306<br/>Cartago, Valle del Cauca</p>
+        </div>
+        <div class="office-item">
+          <strong>Teléfono</strong>
+          <p>+57 310 5317126<br/>Lunes - Viernes, 9am - 6pm</p>
+        </div>
+        <div class="office-item">
+          <strong>Email</strong>
+          <p>contacto@crearcomunicaciones.net<br/>Respuesta en 24 horas</p>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- FOOTER -->
@@ -1161,27 +1192,6 @@
       });
     });
     companySearch.addEventListener('input', applyCompanyFilters);
-
-    // Contact form helper
-    const form = document.getElementById('contactForm');
-    const formMessage = document.getElementById('formMessage');
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      const name = document.getElementById('name').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const message = document.getElementById('message').value.trim();
-
-      if (name.length < 2 || message.length < 10) {
-        formMessage.textContent = 'Completa un nombre valido y un mensaje de al menos 10 caracteres.';
-        return;
-      }
-
-      const subject = encodeURIComponent(`Contacto web - ${name}`);
-      const body = encodeURIComponent(`Nombre: ${name}\nCorreo: ${email}\n\nMensaje:\n${message}`);
-      window.location.href = `mailto:hola@crearbusiness.com?subject=${subject}&body=${body}`;
-      formMessage.textContent = 'Se abrio tu cliente de correo con el mensaje listo.';
-      form.reset();
-    });
 
     // Subtle parallax
     const heroGlow = document.querySelector('.hero-glow');
