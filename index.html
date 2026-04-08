@@ -152,11 +152,17 @@
     }
 
     /* Language elements */
-    [lang="en"] { display: none; }
-    [lang="es"] { display: inline; }
+    /* Language elements - safe defaults */
+    [lang="en"] { display: none !important; }
+    [lang="es"] { display: inline !important; }
 
-    html[lang="en"] [lang="es"] { display: none; }
-    html[lang="en"] [lang="en"] { display: inline; }
+    /* Override for html lang="en" */
+    html[lang="en"] [lang="en"] { display: inline !important; }
+    html[lang="en"] [lang="es"] { display: none !important; }
+
+    /* Override for html lang="es" */
+    html[lang="es"] [lang="es"] { display: inline !important; }
+    html[lang="es"] [lang="en"] { display: none !important; }
 
     /* ── SECTIONS ── */
     section { padding: 120px 48px; max-width: 1200px; margin: 0 auto; }
@@ -1306,10 +1312,13 @@
     // Load saved language
     const savedLang = localStorage.getItem('language') || 'es';
     html.lang = savedLang;
-    const currentBtn = document.querySelector('#langToggle:not([lang="en"])');
+    const visibleToggle = Array.from(langToggleButtons).find(btn => btn.offsetParent !== null);
     if (savedLang === 'en') {
-      currentBtn.textContent = 'ES';
-      currentBtn.title = 'Cambiar a Español';
+      visibleToggle.textContent = 'ES';
+      visibleToggle.title = 'Cambiar a Español';
+    } else {
+      visibleToggle.textContent = 'EN';
+      visibleToggle.title = 'Switch to English';
     }
   </script>
 </body>
