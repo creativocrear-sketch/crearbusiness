@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html id="langRoot" lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -131,6 +131,32 @@
       box-shadow: 0 0 24px var(--accent-red-glow);
       transform: translateY(-1px);
     }
+
+    /* Language Toggle CSS */
+    .lang-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-sub);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-left: 12px;
+    }
+    .lang-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    /* Language elements */
+    [lang="en"] { display: none; }
+    [lang="es"] { display: inline; }
+
+    html[lang="en"] [lang="es"] { display: none; }
+    html[lang="en"] [lang="en"] { display: inline; }
 
     /* ── SECTIONS ── */
     section { padding: 120px 48px; max-width: 1200px; margin: 0 auto; }
@@ -953,12 +979,13 @@
   <nav id="navbar">
     <a href="#" class="nav-logo">Crear<span>Business</span></a>
     <ul class="nav-links">
-      <li><a href="#about">Nosotros</a></li>
-      <li><a href="#companies">Empresas</a></li>
-      <li><a href="#focus">Enfoque</a></li>
+      <li><a href="#about" data-lang="es" lang="es">Nosotros</a><a href="#about" data-lang="en" lang="en" style="display:none;">About</a></li>
+      <li><a href="#companies" data-lang="es" lang="es">Empresas</a><a href="#companies" data-lang="en" lang="en" style="display:none;">Companies</a></li>
+      <li><a href="#focus" data-lang="es" lang="es">Enfoque</a><a href="#focus" data-lang="en" lang="en" style="display:none;">Focus</a></li>
     </ul>
+    <button id="langToggle" class="lang-btn" title="Switch to Spanish">EN</button><button id="langToggle" class="lang-btn" lang="en" style="display:none;" title="Cambiar a Inglés">EN</button>
     <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
-    <button class="nav-cta" onclick="document.getElementById('companies').scrollIntoView({behavior:'smooth'})">Conocer más</button>
+    <button class="nav-cta" onclick="document.getElementById('companies').scrollIntoView({behavior:'smooth'})" data-lang="es" lang="es">Conocer más</button><button class="nav-cta" onclick="document.getElementById('companies').scrollIntoView({behavior:'smooth'})" data-lang="en" lang="en" style="display:none;">Learn more</button>
   </nav>
 
   <!-- HERO -->
@@ -966,30 +993,33 @@
     <div class="hero-grid"></div>
     <div class="hero-glow"></div>
 
-    <h1>Crear<span class="accent-word">Business</span></h1>
-    <p class="hero-subtitle">Holding de empresas digitales</p>
-    <p class="hero-desc">Gestionamos y desarrollamos un ecosistema de empresas enfocadas en tecnología, comunicación y automatización.</p>
+    <h1 data-lang="es" lang="es">Crear<span class="accent-word">Business</span></h1><h1 data-lang="en" lang="en" style="display:none;">Create<span class="accent-word">Business</span></h1>
+    <p class="hero-subtitle" data-lang="es" lang="es">Holding de empresas digitales</p><p class="hero-subtitle" data-lang="en" lang="en" style="display:none;">Digital Companies Holding</p>
+    <p class="hero-desc" data-lang="es" lang="es">Gestionamos y desarrollamos un ecosistema de empresas enfocadas en tecnología, comunicación y automatización.</p><p class="hero-desc" data-lang="en" lang="en" style="display:none;">We manage and develop an ecosystem of companies focused on technology, communication, and automation.</p>
 
     <div class="hero-actions">
-      <a href="#companies" class="btn-primary">
+      <a href="#companies" class="btn-primary" data-lang="es" lang="es">
         Conoce nuestras empresas
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a><a href="#companies" class="btn-primary" data-lang="en" lang="en" style="display:none;">
+        Meet our companies
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
-      <a href="#about" class="btn-ghost">Sobre nosotros</a>
+      <a href="#about" class="btn-ghost" data-lang="es" lang="es">Sobre nosotros</a><a href="#about" class="btn-ghost" data-lang="en" lang="en" style="display:none;">About us</a>
     </div>
 
     <div class="hero-stats">
       <div class="stat">
         <div class="stat-num"><span class="counter" data-target="3">0</span>+</div>
-        <div class="stat-label">Empresas activas</div>
+        <div class="stat-label" data-lang="es" lang="es">Empresas activas</div><div class="stat-label" data-lang="en" lang="en" style="display:none;">Active companies</div>
       </div>
       <div class="stat">
         <div class="stat-num"><span class="counter" data-target="100">0</span>%</div>
-        <div class="stat-label">Digital</div>
+        <div class="stat-label" data-lang="es" lang="es">Digital</div><div class="stat-label" data-lang="en" lang="en" style="display:none;">Digital</div>
       </div>
       <div class="stat">
         <div class="stat-num">IA</div>
-        <div class="stat-label">Impulsado por tecnología</div>
+        <div class="stat-label" data-lang="es" lang="es">Impulsado por tecnología</div><div class="stat-label" data-lang="en" lang="en" style="display:none;">Technology-driven</div>
       </div>
     </div>
   </section>
@@ -997,31 +1027,31 @@
   <!-- ABOUT -->
   <section id="about">
     <div class="about-left reveal">
-      <p class="section-tag">Sobre nosotros</p>
-      <h2>Un holding construido para la era digital</h2>
-      <p>CrearBusiness es una empresa matriz que crea, gestiona y escala negocios digitales de alto impacto. Cada empresa del grupo opera de forma independiente pero comparte visión, infraestructura y talento.</p>
-      <p>Nuestro modelo nos permite movernos rápido, iterar y crecer sin perder el foco en lo que importa: construir productos que transformen industrias.</p>
+      <p class="section-tag" data-lang="es" lang="es">Sobre nosotros</p><p class="section-tag" data-lang="en" lang="en" style="display:none;">About us</p>
+      <h2 data-lang="es" lang="es">Un holding construido para la era digital</h2><h2 data-lang="en" lang="en" style="display:none;">A holding built for the digital era</h2>
+      <p data-lang="es" lang="es">CrearBusiness es una empresa matriz que crea, gestiona y escala negocios digitales de alto impacto. Cada empresa del grupo opera de forma independiente pero comparte visión, infraestructura y talento.</p><p data-lang="en" lang="en" style="display:none;">CrearBusiness is a parent company that creates, manages, and scales high-impact digital businesses. Each group company operates independently but shares vision, infrastructure, and talent.</p>
+      <p data-lang="es" lang="es">Nuestro modelo nos permite movernos rápido, iterar y crecer sin perder el foco en lo que importa: construir productos que transformen industrias.</p><p data-lang="en" lang="en" style="display:none;">Our model allows us to move fast, iterate, and grow without losing focus on what matters: building products that transform industries.</p>
     </div>
     <div class="about-right reveal">
       <div class="about-card">
         <div class="about-icon">🛠️</div>
-        <h4>Creación</h4>
-        <p>Ideamos y lanzamos empresas digitales desde cero con metodología ágil.</p>
+        <h4 data-lang="es" lang="es">Creación</h4><h4 data-lang="en" lang="en" style="display:none;">Creation</h4>
+        <p data-lang="es" lang="es">Ideamos y lanzamos empresas digitales desde cero con metodología ágil.</p><p data-lang="en" lang="en" style="display:none;">We ideate and launch digital companies from zero with agile methodology.</p>
       </div>
       <div class="about-card">
         <div class="about-icon">🤝🏻</div>
-        <h4>Fidelización</h4>
-        <p>Operamos cada empresa con KPIs claros y equipos especializados.</p>
+        <h4 data-lang="es" lang="es">Fidelización</h4><h4 data-lang="en" lang="en" style="display:none;">Loyalty</h4>
+        <p data-lang="es" lang="es">Operamos cada empresa con KPIs claros y equipos especializados.</p><p data-lang="en" lang="en" style="display:none;">We operate each company with clear KPIs and specialized teams.</p>
       </div>
       <div class="about-card">
         <div class="about-icon">📈</div>
-        <h4>Escalado</h4>
-        <p>Llevamos cada producto de la idea al mercado con tracción real.</p>
+        <h4 data-lang="es" lang="es">Escalado</h4><h4 data-lang="en" lang="en" style="display:none;">Scaling</h4>
+        <p data-lang="es" lang="es">Llevamos cada producto de la idea al mercado con tracción real.</p><p data-lang="en" lang="en" style="display:none;">We take each product from idea to market with real traction.</p>
       </div>
       <div class="about-card">
         <div class="about-icon">🔗</div>
-        <h4>Sinergias</h4>
-        <p>Las empresas del holding se potencian entre sí, compartiendo recursos y conocimiento.</p>
+        <h4 data-lang="es" lang="es">Sinergias</h4><h4 data-lang="en" lang="en" style="display:none;">Synergies</h4>
+        <p data-lang="es" lang="es">Las empresas del holding se potencian entre sí, compartiendo recursos y conocimiento.</p><p data-lang="en" lang="en" style="display:none;">Holding companies empower each other, sharing resources and knowledge.</p>
       </div>
     </div>
   </section>
@@ -1029,19 +1059,19 @@
   <!-- COMPANIES -->
   <section id="companies">
     <div class="section-header reveal">
-      <span class="section-tag">Portfolio</span>
-      <h2>Empresas del holding</h2>
-      <p>Tres empresas, un ecosistema. Cada una resuelve un problema distinto con tecnología como base.</p>
+      <span class="section-tag" data-lang="es" lang="es">Portfolio</span><span class="section-tag" data-lang="en" lang="en" style="display:none;">Portfolio</span>
+      <h2 data-lang="es" lang="es">Empresas del holding</h2><h2 data-lang="en" lang="en" style="display:none;">Holding companies</h2>
+      <p data-lang="es" lang="es">Tres empresas, un ecosistema. Cada una resuelve un problema distinto con tecnología como base.</p><p data-lang="en" lang="en" style="display:none;">Three companies, one ecosystem. Each solves a different problem with technology as the base.</p>
     </div>
 
     <div class="companies-toolbar reveal">
       <div class="company-filters">
-        <button class="filter-btn active" data-filter="all">Todas</button>
-        <button class="filter-btn" data-filter="automatizacion">Automatización</button>
-        <button class="filter-btn" data-filter="marketing">Marketing</button>
-        <button class="filter-btn" data-filter="gestion">Gestión</button>
+        <button class="filter-btn active" data-filter="all" data-lang="es" lang="es">Todas</button><button class="filter-btn active" data-filter="all" data-lang="en" lang="en" style="display:none;">All</button>
+        <button class="filter-btn" data-filter="automatizacion" data-lang="es" lang="es">Automatización</button><button class="filter-btn" data-filter="automatizacion" data-lang="en" lang="en" style="display:none;">Automation</button>
+        <button class="filter-btn" data-filter="marketing" data-lang="es" lang="es">Marketing</button><button class="filter-btn" data-filter="marketing" data-lang="en" lang="en" style="display:none;">Marketing</button>
+        <button class="filter-btn" data-filter="gestion" data-lang="es" lang="es">Gestión</button><button class="filter-btn" data-filter="gestion" data-lang="en" lang="en" style="display:none;">Management</button>
       </div>
-      <input class="company-search" id="companySearch" type="search" placeholder="Buscar empresa o categoría..." />
+    <input class="company-search" id="companySearch" type="search" data-lang="es" lang="es" placeholder="Buscar empresa o categoría..." /><input class="company-search" id="companySearch" type="search" data-lang="en" lang="en" style="display:none;" placeholder="Search company or category..." />
     </div>
     <div class="companies-grid" id="companiesGrid">
       <a class="company-card reveal" data-category="automatizacion" data-search="crear.chat ia automatizacion chatbots" href="https://crear.chat/" target="_blank" rel="noopener noreferrer">
@@ -1072,13 +1102,13 @@
 
   <!-- FOCUS -->
   <div id="focus">
-    <div class="focus-inner">
+  <div class="focus-inner">
       <div class="section-header reveal">
-        <span class="section-tag">Nuestro enfoque</span>
-        <h2>Los tres pilares de CrearBusiness</h2>
+        <span class="section-tag" data-lang="es" lang="es">Nuestro enfoque</span><span class="section-tag" data-lang="en" lang="en" style="display:none;">Our approach</span>
+        <h2 data-lang="es" lang="es">Los tres pilares de CrearBusiness</h2><h2 data-lang="en" lang="en" style="display:none;">The three pillars of CrearBusiness</h2>
       </div>
       <div class="focus-grid">
-        <div class="focus-item reveal">
+    <div class="focus-item reveal">
           <div class="focus-number">01</div>
           <div class="focus-icon">
             <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1086,8 +1116,8 @@
               <path d="M16 24l6 6 10-12" stroke="#818cf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
-          <h3>Estrategia</h3>
-          <p>Cada empresa nace de un análisis riguroso del mercado. No construimos sin un norte claro: propuesta de valor definida, modelo de negocio validado y ventajas competitivas reales.</p>
+          <h3 data-lang="es" lang="es">Estrategia</h3><h3 data-lang="en" lang="en" style="display:none;">Strategy</h3>
+          <p data-lang="es" lang="es">Cada empresa nace de un análisis riguroso del mercado. No construimos sin un norte claro: propuesta de valor definida, modelo de negocio validado y ventajas competitivas reales.</p><p data-lang="en" lang="en" style="display:none;">Each company is born from rigorous market analysis. We don't build without a clear direction: defined value proposition, validated business model, and real competitive advantages.</p>
         </div>
         <div class="focus-item reveal">
           <div class="focus-number">02</div>
@@ -1098,8 +1128,8 @@
               <path d="M24 10V8M24 40v-2M38 24h2M8 24H6" stroke="#6366f1" stroke-width="2" stroke-linecap="round"/>
             </svg>
           </div>
-          <h3>Tecnología</h3>
-          <p>Construimos sobre stacks modernos, escalables y seguros. La tecnología no es un fin en sí misma, es el medio que hace posible todo lo demás. Inteligencia artificial, automatización y nube-primero.</p>
+          <h3 data-lang="es" lang="es">Tecnología</h3><h3 data-lang="en" lang="en" style="display:none;">Technology</h3>
+          <p data-lang="es" lang="es">Construimos sobre stacks modernos, escalables y seguros. La tecnología no es un fin en sí misma, es el medio que hace posible todo lo demás. Inteligencia artificial, automatización y nube-primero.</p><p data-lang="en" lang="en" style="display:none;">We build on modern, scalable, and secure stacks. Technology is not an end in itself, it is the means that makes everything else possible. Artificial intelligence, automation, and cloud-first.</p>
         </div>
         <div class="focus-item reveal">
           <div class="focus-number">03</div>
@@ -1110,8 +1140,8 @@
               <circle cx="38" cy="22" r="2" fill="#818cf8"/>
             </svg>
           </div>
-          <h3>Crecimiento</h3>
-          <p>Las métricas que importan: retención, expansión de ingresos y rentabilidad. Crecemos de forma sostenida, reinvirtiendo en cada empresa del ecosistema para maximizar su potencial de largo plazo.</p>
+          <h3 data-lang="es" lang="es">Crecimiento</h3><h3 data-lang="en" lang="en" style="display:none;">Growth</h3>
+          <p data-lang="es" lang="es">Las métricas que importan: retención, expansión de ingresos y rentabilidad. Crecemos de forma sostenida, reinvirtiendo en cada empresa del ecosistema para maximizar su potencial de largo plazo.</p><p data-lang="en" lang="en" style="display:none;">The metrics that matter: retention, revenue expansion, and profitability. We grow sustainably, reinvesting in each ecosystem company to maximize its long-term potential.</p>
         </div>
       </div>
     </div>
@@ -1121,20 +1151,20 @@
   <section id="cta">
     <div class="cta-bg"></div>
     <div class="cta-divider"></div>
-    <h2 class="reveal">Un solo holding,<br/><span style="color:var(--accent2)">múltiples soluciones.</span></h2>
-    <p class="reveal">Estamos construyendo el ecosistema digital del futuro. ¿Quieres ser parte?</p>
+    <h2 class="reveal" data-lang="es" lang="es">Un solo holding,<br/><span style="color:var(--accent2)">múltiples soluciones.</span></h2><h2 class="reveal" data-lang="en" lang="en" style="display:none;">One holding,<br/><span style="color:var(--accent2)">multiple solutions.</span></h2>
+    <p class="reveal" data-lang="es" lang="es">Estamos construyendo el ecosistema digital del futuro. ¿Quieres ser parte?</p><p class="reveal" data-lang="en" lang="en" style="display:none;">We are building the digital ecosystem of the future. Want to be part of it?</p>
         
   </section>
 
   <!-- FOOTER -->
   <footer>
     <div class="footer-logo">Crear<span>Business</span></div>
-    <p class="footer-copy">© 2026 CrearBusiness. Todos los derechos reservados.</p>
+    <p class="footer-copy" data-lang="es" lang="es">© 2026 CrearBusiness. Todos los derechos reservados.</p><p class="footer-copy" data-lang="en" lang="en" style="display:none;">© 2026 CrearBusiness. All rights reserved.</p>
     <ul class="footer-links">
-      <li><a href="#about">Nosotros</a></li>
-      <li><a href="#companies">Empresas</a></li>
+      <li><a href="#about" data-lang="es" lang="es">Nosotros</a><a href="#about" data-lang="en" lang="en" style="display:none;">About</a></li>
+      <li><a href="#companies" data-lang="es" lang="es">Empresas</a><a href="#companies" data-lang="en" lang="en" style="display:none;">Companies</a></li>
       <li><a href="mailto:contacto@crearcomunicaciones.net">contacto@crearcomunicaciones.net</a></li>
-      <li><a href="https://wa.me/573105317126" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+      <li><a href="https://wa.me/573105317126" target="_blank" rel="noopener noreferrer" data-lang="es" lang="es">WhatsApp</a><a href="https://wa.me/573105317126" target="_blank" rel="noopener noreferrer" data-lang="en" lang="en" style="display:none;">WhatsApp</a></li>
     </ul>
   </footer>
 
@@ -1252,6 +1282,35 @@
       const offset = Math.min(window.scrollY * 0.08, 35);
       heroGlow.style.transform = `translate(-50%, calc(-55% + ${offset}px))`;
     }, { passive: true });
+
+    // Language Toggle JavaScript
+    const langToggleButtons = document.querySelectorAll('#langToggle');
+    const html = document.documentElement;
+
+    langToggleButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (html.lang === 'es') {
+          html.lang = 'en';
+          btn.textContent = 'ES';
+          btn.title = 'Cambiar a Español';
+          localStorage.setItem('language', 'en');
+        } else {
+          html.lang = 'es';
+          btn.textContent = 'EN';
+          btn.title = 'Switch to English';
+          localStorage.setItem('language', 'es');
+        }
+      });
+    });
+
+    // Load saved language
+    const savedLang = localStorage.getItem('language') || 'es';
+    html.lang = savedLang;
+    const currentBtn = document.querySelector('#langToggle:not([lang="en"])');
+    if (savedLang === 'en') {
+      currentBtn.textContent = 'ES';
+      currentBtn.title = 'Cambiar a Español';
+    }
   </script>
 </body>
 </html>
