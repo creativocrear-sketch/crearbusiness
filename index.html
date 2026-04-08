@@ -151,18 +151,9 @@
       background: var(--accent-dim);
     }
 
-    /* Language elements */
-    /* Language elements - safe defaults */
-    [lang="en"] { display: none !important; }
-    [lang="es"] { display: inline !important; }
-
-    /* Override for html lang="en" */
-    html[lang="en"] [lang="en"] { display: inline !important; }
-    html[lang="en"] [lang="es"] { display: none !important; }
-
-    /* Override for html lang="es" */
-    html[lang="es"] [lang="es"] { display: inline !important; }
-    html[lang="es"] [lang="en"] { display: none !important; }
+    /* Language Toggle CSS - FIXED */
+    [lang="es"].hide-es { display: none !important; }
+    [lang="en"].hide-en { display: none !important; }
 
     /* ── SECTIONS ── */
     section { padding: 120px 48px; max-width: 1200px; margin: 0 auto; }
@@ -1289,36 +1280,54 @@
       heroGlow.style.transform = `translate(-50%, calc(-55% + ${offset}px))`;
     }, { passive: true });
 
-    // Language Toggle JavaScript
+    // Language Toggle JavaScript - FIXED with class toggle
     const langToggleButtons = document.querySelectorAll('#langToggle');
-    const html = document.documentElement;
+    const htmlRoot = document.documentElement;
 
-    langToggleButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        if (html.lang === 'es') {
-          html.lang = 'en';
+    // Toggle function
+    const toggleLanguage = () => {
+      if (htmlRoot.lang === 'es') {
+        htmlRoot.lang = 'en';
+        document.querySelectorAll('[lang="es"]').forEach(el => el.classList.add('hide-es'));
+        document.querySelectorAll('[lang="en"]').forEach(el => el.classList.remove('hide-en'));
+        localStorage.setItem('language', 'en');
+        Array.from(langToggleButtons).forEach(btn => {
           btn.textContent = 'ES';
           btn.title = 'Cambiar a Español';
-          localStorage.setItem('language', 'en');
-        } else {
-          html.lang = 'es';
+        });
+      } else {
+        htmlRoot.lang = 'es';
+        document.querySelectorAll('[lang="en"]').forEach(el => el.classList.add('hide-en'));
+        document.querySelectorAll('[lang="es"]').forEach(el => el.classList.remove('hide-es'));
+        localStorage.setItem('language', 'es');
+        Array.from(langToggleButtons).forEach(btn => {
           btn.textContent = 'EN';
           btn.title = 'Switch to English';
-          localStorage.setItem('language', 'es');
-        }
-      });
+        });
+      }
+    };
+
+    langToggleButtons.forEach(btn => {
+      btn.addEventListener('click', toggleLanguage);
     });
 
-    // Load saved language
+    // Load saved language on startup
     const savedLang = localStorage.getItem('language') || 'es';
-    html.lang = savedLang;
-    const visibleToggle = Array.from(langToggleButtons).find(btn => btn.offsetParent !== null);
+    htmlRoot.lang = savedLang;
     if (savedLang === 'en') {
-      visibleToggle.textContent = 'ES';
-      visibleToggle.title = 'Cambiar a Español';
+      document.querySelectorAll('[lang="es"]').forEach(el => el.classList.add('hide-es'));
+      document.querySelectorAll('[lang="en"]').forEach(el => el.classList.remove('hide-en'));
+      Array.from(langToggleButtons).forEach(btn => {
+        btn.textContent = 'ES';
+        btn.title = 'Cambiar a Español';
+      });
     } else {
-      visibleToggle.textContent = 'EN';
-      visibleToggle.title = 'Switch to English';
+      document.querySelectorAll('[lang="en"]').forEach(el => el.classList.add('hide-en'));
+      document.querySelectorAll('[lang="es"]').forEach(el => el.classList.remove('hide-es'));
+      Array.from(langToggleButtons).forEach(btn => {
+        btn.textContent = 'EN';
+        btn.title = 'Switch to English';
+      });
     }
   </script>
 </body>
