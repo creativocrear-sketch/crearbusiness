@@ -980,7 +980,6 @@
       <li><a href="#companies" data-lang="es" lang="es">Empresas</a><a href="#companies" data-lang="en" lang="en" style="display:none;">Companies</a></li>
       <li><a href="#focus" data-lang="es" lang="es">Enfoque</a><a href="#focus" data-lang="en" lang="en" style="display:none;">Focus</a></li>
     </ul>
-    <button id="langToggle" class="lang-btn" title="Switch to Spanish">EN</button><button id="langToggle" class="lang-btn" lang="en" style="display:none;" title="Cambiar a Inglés">EN</button>
     <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
     <button class="nav-cta" onclick="document.getElementById('companies').scrollIntoView({behavior:'smooth'})" data-lang="es" lang="es">Conocer más</button><button class="nav-cta" onclick="document.getElementById('companies').scrollIntoView({behavior:'smooth'})" data-lang="en" lang="en" style="display:none;">Learn more</button>
   </nav>
@@ -1291,25 +1290,17 @@
         document.querySelectorAll('[lang="es"]').forEach(el => el.classList.add('hide-es'));
         document.querySelectorAll('[lang="en"]').forEach(el => el.classList.remove('hide-en'));
         localStorage.setItem('language', 'en');
-        Array.from(langToggleButtons).forEach(btn => {
-          btn.textContent = 'ES';
-          btn.title = 'Cambiar a Español';
-        });
+
       } else {
         htmlRoot.lang = 'es';
         document.querySelectorAll('[lang="en"]').forEach(el => el.classList.add('hide-en'));
         document.querySelectorAll('[lang="es"]').forEach(el => el.classList.remove('hide-es'));
         localStorage.setItem('language', 'es');
-        Array.from(langToggleButtons).forEach(btn => {
-          btn.textContent = 'EN';
-          btn.title = 'Switch to English';
-        });
+
       }
     };
 
-    langToggleButtons.forEach(btn => {
-      btn.addEventListener('click', toggleLanguage);
-    });
+
 
     // Load saved language on startup
     const savedLang = localStorage.getItem('language') || 'es';
