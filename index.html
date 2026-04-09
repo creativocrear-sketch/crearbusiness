@@ -980,7 +980,8 @@
       <li><a href="#companies" data-lang="es" lang="es">Empresas</a><a href="#companies" data-lang="en" lang="en" style="display:none;">Companies</a></li>
       <li><a href="#focus" data-lang="es" lang="es">Enfoque</a><a href="#focus" data-lang="en" lang="en" style="display:none;">Focus</a></li>
     </ul>
-    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    <button class="nav-toggle" id="navToggle-es" aria-label="Abrir menú" data-lang="es" lang="es">☰</button>
+    <button class="nav-toggle" id="navToggle-en" aria-label="Open menu" data-lang="en" lang="en" style="display:none;">☰</button>
     <button class="lang-btn" id="langToggle" title="Switch to English">EN</button>
     <button class="nav-cta" onclick="document.getElementById('companies').scrollIntoView({behavior:'smooth'})" data-lang="es" lang="es">Conocer más</button><button class="nav-cta" onclick="document.getElementById('companies').scrollIntoView({behavior:'smooth'})" data-lang="en" lang="en" style="display:none;">Learn more</button>
   </nav>
@@ -1173,9 +1174,15 @@
     });
 
     // Mobile nav
-    const navToggle = document.getElementById('navToggle');
+    const navToggleEs = document.getElementById('navToggle-es');
+    const navToggleEn = document.getElementById('navToggle-en');
     const navLinks = document.querySelector('.nav-links');
-    navToggle.addEventListener('click', () => {
+    
+    navToggleEs.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+    
+    navToggleEn.addEventListener('click', () => {
       navLinks.classList.toggle('open');
     });
 
@@ -1296,12 +1303,24 @@
         document.querySelectorAll('[lang="es"]').forEach(el => el.classList.add('hide-es'));
         document.querySelectorAll('[lang="en"]').forEach(el => el.classList.remove('hide-en'));
         localStorage.setItem('language', 'en');
+        
+        // Update button text and title
+        Array.from(langToggleButtons).forEach(btn => {
+          btn.textContent = 'ES';
+          btn.title = 'Cambiar a Español';
+        });
 
       } else {
         htmlRoot.lang = 'es';
         document.querySelectorAll('[lang="en"]').forEach(el => el.classList.add('hide-en'));
         document.querySelectorAll('[lang="es"]').forEach(el => el.classList.remove('hide-es'));
         localStorage.setItem('language', 'es');
+        
+        // Update button text and title
+        Array.from(langToggleButtons).forEach(btn => {
+          btn.textContent = 'EN';
+          btn.title = 'Switch to English';
+        });
 
       }
     };
