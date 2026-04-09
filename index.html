@@ -1287,64 +1287,7 @@
       heroGlow.style.transform = `translate(-50%, calc(-55% + ${offset}px))`;
     }, { passive: true });
 
-    // Language Toggle JavaScript - FIXED with class toggle
-    const langToggleButtons = document.querySelectorAll('#langToggle');
-    const htmlRoot = document.documentElement;
-
-    // Add event listener to language toggle buttons
-    langToggleButtons.forEach(btn => {
-      btn.addEventListener('click', toggleLanguage);
-    });
-
-    // Toggle function
-    const toggleLanguage = () => {
-      if (htmlRoot.lang === 'es') {
-        htmlRoot.lang = 'en';
-        document.querySelectorAll('[lang="es"]').forEach(el => el.classList.add('hide-es'));
-        document.querySelectorAll('[lang="en"]').forEach(el => el.classList.remove('hide-en'));
-        localStorage.setItem('language', 'en');
-        
-        // Update button text and title
-        Array.from(langToggleButtons).forEach(btn => {
-          btn.textContent = 'ES';
-          btn.title = 'Cambiar a Español';
-        });
-
-      } else {
-        htmlRoot.lang = 'es';
-        document.querySelectorAll('[lang="en"]').forEach(el => el.classList.add('hide-en'));
-        document.querySelectorAll('[lang="es"]').forEach(el => el.classList.remove('hide-es'));
-        localStorage.setItem('language', 'es');
-        
-        // Update button text and title
-        Array.from(langToggleButtons).forEach(btn => {
-          btn.textContent = 'EN';
-          btn.title = 'Switch to English';
-        });
-
-      }
-    };
-
-
-
-    // Load saved language on startup
-    const savedLang = localStorage.getItem('language') || 'es';
-    htmlRoot.lang = savedLang;
-    if (savedLang === 'en') {
-      document.querySelectorAll('[lang="es"]').forEach(el => el.classList.add('hide-es'));
-      document.querySelectorAll('[lang="en"]').forEach(el => el.classList.remove('hide-en'));
-      Array.from(langToggleButtons).forEach(btn => {
-        btn.textContent = 'ES';
-        btn.title = 'Cambiar a Español';
-      });
-    } else {
-      document.querySelectorAll('[lang="en"]').forEach(el => el.classList.add('hide-en'));
-      document.querySelectorAll('[lang="es"]').forEach(el => el.classList.remove('hide-es'));
-      Array.from(langToggleButtons).forEach(btn => {
-        btn.textContent = 'EN';
-        btn.title = 'Switch to English';
-      });
-    }
-  </script>
+      </script>
+  <script src="language-toggle.js"></script>
 </body>
 </html>
