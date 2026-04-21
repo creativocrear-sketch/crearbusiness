@@ -103,6 +103,12 @@
     }
     .nav-links a:hover { color: var(--text); }
     .nav-links a.active { color: var(--text); }
+    .nav-cta-wrapper {
+      display: none;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      margin-top: 8px;
+    }
     .nav-toggle {
       display: none;
       width: 40px;
@@ -942,9 +948,9 @@
         max-width: calc(100vw - 40px);
       }
       .nav-links.open { display: flex; }
+      .nav-cta-wrapper { display: block; }
       .nav-links li { border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 8px; }
       .nav-links li:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
-      .nav-links li:last-of-type { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
       .nav-toggle { display: inline-flex; align-items: center; justify-content: center; }
       .lang-btn { padding: 6px 10px; font-size: 0.75rem; margin-left: 8px; }
       section { padding: 80px 20px; }
@@ -1018,8 +1024,10 @@
       <li><a href="#about" data-lang="es" lang="es">Nosotros</a><a href="#about" data-lang="en" lang="en" style="display:none;">About</a></li>
       <li><a href="#companies" data-lang="es" lang="es">Empresas</a><a href="#companies" data-lang="en" lang="en" style="display:none;">Companies</a></li>
       <li><a href="#focus" data-lang="es" lang="es">Enfoque</a><a href="#focus" data-lang="en" lang="en" style="display:none;">Focus</a></li>
-      <li><button class="nav-cta mobile-nav-cta" onclick="document.getElementById('companies').scrollIntoView({behavior:'smooth'})" data-lang="es" lang="es">Conocer más</button><button class="nav-cta mobile-nav-cta" onclick="document.getElementById('companies').scrollIntoView({behavior:'smooth'})" data-lang="en" lang="en" style="display:none;">Learn more</button></li>
     </ul>
+    <div class="nav-cta-wrapper">
+      <button class="nav-cta mobile-nav-cta" onclick="document.getElementById('companies').scrollIntoView({behavior:'smooth'})" data-lang="es" lang="es">Conocer más</button><button class="nav-cta mobile-nav-cta" onclick="document.getElementById('companies').scrollIntoView({behavior:'smooth'})" data-lang="en" lang="en" style="display:none;">Learn more</button>
+    </div>
     <button class="nav-toggle" id="navToggle-es" aria-label="Abrir menú" data-lang="es" lang="es">☰</button>
     <button class="nav-toggle" id="navToggle-en" aria-label="Open menu" data-lang="en" lang="en" style="display:none;">☰</button>
     <button class="lang-btn" id="langToggle" title="Switch to English">EN</button>
